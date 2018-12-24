@@ -32,12 +32,13 @@ class Users:
             "userId": self.__class__.userId,
             "username": self.username,
             "email": self.email,
-            "date created": self.date_created
+            "date_created": self.date_created
         }
         
         #add new user to users list
         self.users.append(self.user)
         return self.user, 201
         
-        
+    def get_users(self):
+        return self.users
 
