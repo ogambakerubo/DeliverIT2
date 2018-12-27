@@ -37,7 +37,7 @@ class Users:
         
         #add new user to users list
         self.users.append(self.user)
-        return self.user, 201
+        return self.user
         
     def get_users(self):
         #return a list of all users
@@ -45,6 +45,12 @@ class Users:
 
     def get_user_by_id(self, id):
         #get a specific user by userId
-        user_by_id = [user for user in self.users if order['userId'] == id]
+        user_by_id = [user for user in self.users if user['userId'] == id]
         return user_by_id
+        
+    def update_user(self, id, newname, newemail):
+        #change user details
+        user_to_patch = [user for user in self.users if user['userId'] == id]
+        user_to_patch[0]['username'] = newname
+        user_to_patch[0]['email'] = newemail
         

@@ -16,13 +16,22 @@ def add_new_user():
     email = parsejson['email']
     date_created = parsejson['date_created']
     user.add_user(int(userId), username, email, date_created)
-    return jsonify({'message': 'User successfully created'})
+    return jsonify({'message': 'User successfully created'}), 201
 
 #retrieve all users endpoint
 @app.route('/api/v1/users', methods=['GET'])
 def get_users():
-    return jsonify({'users': user.get_users()})
+    return jsonify({'users': user.get_users()}), 200
     
 #retrieve single user endpoint
 @app.route('/api/v1/users/<int:id>', methods=['GET'])
+def get_user_by_id(id):
+    return jsonify({'user': user.get_user_by_id()}), 200
 
+#change user details endpoint
+@app.route('/api/v1/users/<int:id>', methods=['PATCH'])
+def update_user(id):
+    parsejson = request.get_json()
+    username = parsejson['username']
+    email = parsejson['email']
+    return jsonify({'user': user.update_user(id, username, email)}), 201
