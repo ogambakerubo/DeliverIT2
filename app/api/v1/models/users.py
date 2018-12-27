@@ -40,5 +40,11 @@ class Users:
         return self.user, 201
         
     def get_users(self):
+        #return a list of all users
         return self.users
 
+    def get_user_by_id(self, id):
+        #get a specific user by userId
+        user_by_id = [user for user in self.users if order['userId'] == id]
+        return user_by_id
+        

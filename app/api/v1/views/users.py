@@ -22,3 +22,7 @@ def add_new_user():
 @app.route('/api/v1/users', methods=['GET'])
 def get_users():
     return jsonify({'users': user.get_users()})
+    
+#retrieve single user endpoint
+@app.route('/api/v1/users/<int:id>', methods=['GET'])
+
