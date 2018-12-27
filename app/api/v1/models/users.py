@@ -9,6 +9,7 @@ to store data in memory
 
 class Users:
     '''This class creates a blueprint for the user object'''
+    #The user ID
     userId = 0
     
     def __init__(self):

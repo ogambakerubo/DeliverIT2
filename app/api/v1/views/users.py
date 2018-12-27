@@ -1,10 +1,12 @@
 #app/api/v1/views/users.py
-import models.users
+from models.users import Users
 from flask import Flask, jsonify
+from datetime import datetime
 
 #instantiate app object
 app = Flask(__name__)
 
+#instantiate user object
 user = users.Users()
 
 #create new user endpoint
