@@ -35,3 +35,9 @@ def update_user(id):
     username = parsejson['username']
     email = parsejson['email']
     return jsonify({'user': user.update_user(id, username, email)}), 201
+    
+#delete user account endpoint
+@app.route('/api/v1/users/<int:id>', methods=['DELETE'])
+def delete_user(id):
+    user.delete_user(id)
+    return jsonify({'message': 'Account successfully deleted'}), 204

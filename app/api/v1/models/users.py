@@ -53,4 +53,11 @@ class Users:
         user_to_patch = [user for user in self.users if user['userId'] == id]
         user_to_patch[0]['username'] = newname
         user_to_patch[0]['email'] = newemail
+        return user_to_patch
+        
+    def delete_user(self, id):
+        #delete a specific user by userId
+        delete_user = [user for user in self.users if user['userId'] == id]
+        self.users.remove(delete_user[0])
+        return self.users
         
