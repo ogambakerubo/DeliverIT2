@@ -1,5 +1,5 @@
 #app/api/v1/views/users.py
-from models.users import Users
+from v1.models import users
 from flask import Flask, jsonify
 from datetime import datetime
 
@@ -26,20 +26,24 @@ def get_users():
     return jsonify({'users': user.get_users()}), 200
     
 #retrieve single user endpoint
-@app.route('/api/v1/users/<int:id>', methods=['GET'])
-def get_user_by_id(id):
+@app.route('/api/v1/users/<int:userId>', methods=['GET'])
+def get_user_by_id(userId):
     return jsonify({'user': user.get_user_by_id()}), 200
 
 #change user details endpoint
-@app.route('/api/v1/users/<int:id>', methods=['PATCH'])
-def update_user(id):
+@app.route('/api/v1/users/<int:userId>', methods=['PATCH'])
+def update_user(userId):
     parsejson = request.get_json()
     username = parsejson['username']
     email = parsejson['email']
-    return jsonify({'user': user.update_user(id, username, email)}), 201
+    return jsonify({'user': user.update_user(userId, username, email)}), 201
     
 #delete user account endpoint
-@app.route('/api/v1/users/<int:id>', methods=['DELETE'])
-def delete_user(id):
-    user.delete_user(id)
+@app.route('/api/v1/users/<int:userId>', methods=['DELETE'])
+def delete_user(userId):
+    user.delete_user(userId)
     return jsonify({'message': 'Account successfully deleted'}), 204
+    
+if __name__ == '__main__':
+    app.run(debug=True)
+    

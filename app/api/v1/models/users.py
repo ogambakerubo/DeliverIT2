@@ -44,21 +44,21 @@ class Users:
         #return a list of all users
         return self.users
 
-    def get_user_by_id(self, id):
+    def get_user_by_id(self, userId):
         #get a specific user by userId
-        user_by_id = [user for user in self.users if user['userId'] == id]
+        user_by_id = [user for user in self.users if user['userId'] == userId]
         return user_by_id
         
-    def update_user(self, id, newname, newemail):
+    def update_user(self, userId, newname, newemail):
         #change user details
-        user_to_patch = [user for user in self.users if user['userId'] == id]
+        user_to_patch = [user for user in self.users if user['userId'] == userId]
         user_to_patch[0]['username'] = newname
         user_to_patch[0]['email'] = newemail
         return user_to_patch
         
-    def delete_user(self, id):
+    def delete_user(self, userId):
         #delete a specific user by userId
-        delete_user = [user for user in self.users if user['userId'] == id]
+        delete_user = [user for user in self.users if user['userId'] == userId]
         self.users.remove(delete_user[0])
         return self.users
         
