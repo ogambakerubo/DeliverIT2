@@ -41,11 +41,11 @@ class Users:
         
         #add new user to users list
         self.users.append(self.user)
-        return "New user added:", self.user
+        return self.user
         
     def get_users(self):
         #return a list of all users
-        return "All subscribed users:", self.users
+        return self.users
 
     def get_user_by_id(self, userId):
         #get a specific user by userId
@@ -61,12 +61,12 @@ class Users:
         date_modified = str(datetime.now())
         user_to_patch['date_modified'] = date_modified
         
-        return "Updated user details:", user_to_patch
+        return user_to_patch
         
     def delete_user(self, userId):
         #delete a specific user by userId
         delete_user = [user for user in self.users if user['userId'] == userId]
         self.unsub.append(delete_user[0])
         self.users.remove(delete_user[0])
-        return "User deleted:", self.users
+        return self.users
         
