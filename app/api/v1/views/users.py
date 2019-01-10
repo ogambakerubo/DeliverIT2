@@ -1,6 +1,5 @@
 #app/api/v1/views/users.py
 from flask import Flask, jsonify
-from datetime import datetime
 
 #instantiate app object
 app = Flask(__name__)
