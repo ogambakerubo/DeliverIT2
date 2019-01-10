@@ -24,7 +24,7 @@ def get_users():
 #retrieve single user endpoint
 @app.route('/api/v1/users/<int:userId>', methods=['GET'])
 def get_user_by_id(userId):
-    return jsonify({'user': user.get_user_by_id()}), 200
+    return jsonify({'user': user.get_user_by_id(userId)}), 200
 
 #change user details endpoint
 @app.route('/api/v1/users/<int:userId>', methods=['PATCH'])
