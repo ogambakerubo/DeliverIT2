@@ -59,7 +59,7 @@ class Users:
         user_to_patch[0]['email'] = newemail
         
         date_modified = str(datetime.now())
-        user_to_patch['date_modified'] = date_modified
+        user_to_patch[0]['date_modified'] = date_modified
         
         return user_to_patch
         
