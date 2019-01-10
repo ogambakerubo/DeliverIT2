@@ -15,6 +15,8 @@ class Users:
     def __init__(self):
         #list of users
         self.users =[]
+        #list of unsubscribed users
+        self.unsub =[]
         
     def add_user(self, username, email):
         #user create account entries
@@ -38,11 +40,11 @@ class Users:
         
         #add new user to users list
         self.users.append(self.user)
-        return self.user
+        return "New user added:", self.user
         
     def get_users(self):
         #return a list of all users
-        return self.users
+        return "All subscribed users:", self.users
 
     def get_user_by_id(self, userId):
         #get a specific user by userId
@@ -54,11 +56,12 @@ class Users:
         user_to_patch = [user for user in self.users if user['userId'] == userId]
         user_to_patch[0]['username'] = newname
         user_to_patch[0]['email'] = newemail
-        return user_to_patch
+        return "Updated user details:", user_to_patch
         
     def delete_user(self, userId):
         #delete a specific user by userId
         delete_user = [user for user in self.users if user['userId'] == userId]
+        self.unsub.append(delete_user[0])
         self.users.remove(delete_user[0])
-        return self.users
+        return "User deleted:", self.users
         
