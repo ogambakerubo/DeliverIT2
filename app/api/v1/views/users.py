@@ -1,5 +1,4 @@
 #app/api/v1/views/users.py
-from v1.models import users
 from flask import Flask, jsonify
 from datetime import datetime
 
@@ -43,7 +42,4 @@ def update_user(userId):
 def delete_user(userId):
     user.delete_user(userId)
     return jsonify({'message': 'Account successfully deleted'}), 204
-    
-if __name__ == '__main__':
-    app.run(debug=True)
     
