@@ -12,11 +12,9 @@ user = users.Users()
 @app.route('/api/v1/users', methods=['POST'])
 def add_new_user():
     parsejson = request.get_json()
-    userId = parsejson['userId']
     username = parsejson['username']
     email = parsejson['email']
-    date_created = parsejson['date_created']
-    user.add_user(int(userId), username, email, date_created)
+    user.add_user(username, email)
     return jsonify({'message': 'User successfully created'}), 201
 
 #retrieve all users endpoint
@@ -35,7 +33,7 @@ def update_user(userId):
     parsejson = request.get_json()
     username = parsejson['username']
     email = parsejson['email']
-    return jsonify({'user': user.update_user(userId, username, email)}), 201
+    return jsonify({'Updated user': user.update_user(userId, username, email)}), 201
     
 #delete user account endpoint
 @app.route('/api/v1/users/<int:userId>', methods=['DELETE'])
