@@ -25,11 +25,6 @@ class Users:
         self.email = email
         self.date_created = str(datetime.now())
         
-        #check for similar usernames
-        for self.user in self.users:
-            if(self.username == self.user["username"]):
-                return "User with name {} already exists".format(self.username), 400
-                
         #user fields
         self.user = {
             "userId": self.__class__.userId,
@@ -37,6 +32,12 @@ class Users:
             "email": self.email,
             "date_created": self.date_created
         }
+        
+        #check for similar usernames
+        for self.user in self.users:
+            if(self.username == self.user["username"]):
+                return "User with name {} already exists".format(self.username), 400
+                
         
         #add new user to users list
         self.users.append(self.user)
@@ -56,6 +57,10 @@ class Users:
         user_to_patch = [user for user in self.users if user['userId'] == userId]
         user_to_patch[0]['username'] = newname
         user_to_patch[0]['email'] = newemail
+        
+        date_modified = str(datetime.now())
+        user_to_patch['date_modified'] = date_modified
+        
         return "Updated user details:", user_to_patch
         
     def delete_user(self, userId):
