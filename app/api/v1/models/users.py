@@ -68,4 +68,4 @@ class Users:
         delete_user = [user for user in self.users if user['userId'] == userId]
         self.unsub.append(delete_user[0])
         self.users.remove(delete_user[0])
-        return self.users
+        return "User with id {} deleted".format(userId)

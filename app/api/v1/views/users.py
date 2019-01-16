@@ -48,5 +48,4 @@ def update_user(userId):
 
 @app.route('/api/v1/users/<int:userId>', methods=['DELETE'])
 def delete_user(userId):
-    user.delete_user(userId)
-    return jsonify({'message': 'Account successfully deleted'}), 204
+    return jsonify({'message': user.delete_user(userId)}), 200
