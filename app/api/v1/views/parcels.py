@@ -28,3 +28,4 @@ def add_new_parcel():
 @app.route('/api/v1/users/<int:userId>/parcels', methods=['GET'])
 def user_parcels(userId):
     return jsonify({'user parcels': parcel.user_parcels(userId)}), 200
+
