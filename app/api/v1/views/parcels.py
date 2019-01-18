@@ -21,3 +21,11 @@ def add_new_parcel():
     drop_location = parsejson['drop_location']
     userId = parsejson['userId']
     return jsonify({'feedback': parcel.add_parcel(parcel_name, int(quantity), pickup_location, drop_location, int(userId))}), 201
+
+# retrieve specific user parcels endpoint
+
+
+@app.route('/api/v1/users/<int:userId>/parcels', methods=['GET'])
+def user_parcels(userId):
+    return jsonify({'user parcels': parcel.user_parcels(userId)}), 200
+

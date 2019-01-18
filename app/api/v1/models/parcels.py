@@ -44,3 +44,10 @@ class Parcels:
         # add new parcel to parcels list
         self.parcels.append(self.parcel)
         return self.parcel
+
+    def user_parcels(self, userId):
+        # return a list of parcels of specific user
+        parcels_by_userId = [
+            parcel for parcel in self.parcels if parcel['userId'] == userId]
+        return parcels_by_userId
+

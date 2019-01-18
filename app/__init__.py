@@ -8,3 +8,4 @@ app = Flask(__name__)
 
 from app.api.v1.views import parcels
 from app.api.v1.views import users
+
