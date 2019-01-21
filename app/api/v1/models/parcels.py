@@ -51,3 +51,7 @@ class Parcels:
             parcel for parcel in self.parcels if parcel['userId'] == userId]
         return parcels_by_userId
 
+    def get_parcels(self):
+        #return a list of all parcels
+        return self.parcels
+

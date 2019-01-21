@@ -29,3 +29,10 @@ def add_new_parcel():
 def user_parcels(userId):
     return jsonify({'user parcels': parcel.user_parcels(userId)}), 200
 
+# retrieve all parcels endpoint
+
+
+@app.route('/api/v1/parcels', methods=['GET'])
+def get_parcels():
+    return jsonify({'parcels': parcel.get_parcels()}), 200
+
