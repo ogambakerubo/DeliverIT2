@@ -91,3 +91,4 @@ class Parcels:
         parcel_status_update[0]['date_delivered'] = date_delivered
 
         return parcel_status_update
+

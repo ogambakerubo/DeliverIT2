@@ -61,3 +61,4 @@ def update_parcel(parcelId):
 @app.route('/api/v1/parcels/<int:parcelId>/status-update', methods=['PATCH'])
 def change_status(parcelId):
     return jsonify({'Status updated': parcel.change_status(parcelId)}), 201
+
