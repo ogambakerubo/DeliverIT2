@@ -60,4 +60,35 @@ class Parcels:
         parcel_by_id = [
             parcel for parcel in self.parcels if parcel['parcelId'] == parcelId]
         return parcel_by_id
-      
+
+    def update_parcel(self, parcelId, parcel_name, quantity, pickup_location, drop_location):
+
+        # check if parcel status is delivered
+        for parcel in self.parcels:
+            if(parcel.get("parcel_status") == "delivered"):
+                return "Parcel with ID number {} has already been delivered".format(parcelId)
+
+        # change parcel details
+        parcel_to_patch = [
+            parcel for parcel in self.parcels if parcel['parcelId'] == parcelId]
+        parcel_to_patch[0]['parcel_name'] = parcel_name
+        parcel_to_patch[0]['quantity'] = quantity
+        parcel_to_patch[0]['pickup_location'] = pickup_location
+        parcel_to_patch[0]['drop_location'] = drop_location
+
+        date_modified = str(datetime.now())
+        parcel_to_patch[0]['date_modified'] = date_modified
+
+        return parcel_to_patch
+
+    def change_status(self, parcelId):
+        #change parcel delivery status
+        parcel_status_update = [
+            parcel for parcel in self.parcels if parcel['parcelId'] == parcelId]
+        parcel_status_update[0]['parcel_status'] = "delivered"
+
+        date_delivered = str(datetime.now())
+        parcel_status_update[0]['date_delivered'] = date_delivered
+
+        return parcel_status_update
+

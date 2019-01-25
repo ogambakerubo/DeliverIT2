@@ -43,3 +43,23 @@ def get_parcels():
 def get_parcel_by_id(parcelId):
     return jsonify({'parcel': parcel.get_parcel_by_id(parcelId)}), 200
 
+# change parcel details endpoint
+
+
+@app.route('/api/v1/parcels/<int:parcelId>', methods=['PATCH'])
+def update_parcel(parcelId):
+    parsejson = request.get_json()
+    parcel_name = parsejson['parcel_name']
+    quantity = parsejson['quantity']
+    pickup_location = parsejson['pickup_location']
+    drop_location = parsejson['drop_location']
+    return jsonify({'Updated parcel': parcel.update_parcel(parcelId, parcel_name, int(quantity), pickup_location, drop_location)}), 201
+
+# change parcel delivery status endpoint
+
+
+@app.route('/api/v1/parcels/<int:parcelId>/status-update', methods=['PATCH'])
+def change_status(parcelId):
+    return jsonify({'Status updated': parcel.change_status(parcelId)}), 201
+
+

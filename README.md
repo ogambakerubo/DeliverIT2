@@ -19,7 +19,7 @@ These instructions will get you a copy of the project up and running on your loc
 $ git clone https://github.com/ogambakerubo/DeliverIT2.git
 $ cd DeliverIT2
 ```
-  
+
 2. Initialize and activate a virtualenv
 
 ```
