@@ -62,3 +62,4 @@ def update_parcel(parcelId):
 def change_status(parcelId):
     return jsonify({'Status updated': parcel.change_status(parcelId)}), 201
 
+
