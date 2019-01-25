@@ -36,3 +36,10 @@ def user_parcels(userId):
 def get_parcels():
     return jsonify({'parcels': parcel.get_parcels()}), 200
 
+# retrieve single parcel endpoint
+
+
+@app.route('/api/v1/parcels/<int:parcelId>', methods=['GET'])
+def get_parcel_by_id(parcelId):
+    return jsonify({'parcel': parcel.get_parcel_by_id(parcelId)}), 200
+

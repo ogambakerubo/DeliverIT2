@@ -52,6 +52,12 @@ class Parcels:
         return parcels_by_userId
 
     def get_parcels(self):
-        #return a list of all parcels
+        # return a list of all parcels
         return self.parcels
 
+    def get_parcel_by_id(self, parcelId):
+        # get a specific parcel by parcelId
+        parcel_by_id = [
+            parcel for parcel in self.parcels if parcel['parcelId'] == parcelId]
+        return parcel_by_id
+      
