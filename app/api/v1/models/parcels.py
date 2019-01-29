@@ -82,7 +82,8 @@ class Parcels:
         return parcel_to_patch
 
     def change_status(self, parcelId):
-        #change parcel delivery status
+
+        # change parcel delivery status
         parcel_status_update = [
             parcel for parcel in self.parcels if parcel['parcelId'] == parcelId]
         parcel_status_update[0]['parcel_status'] = "delivered"
@@ -91,4 +92,16 @@ class Parcels:
         parcel_status_update[0]['date_delivered'] = date_delivered
 
         return parcel_status_update
+
+    def cancelled(self):
+        # return a list of cancelled orders
+        return self.deleted_parcels
+
+    def delete_parcel(self, parcelId):
+        # delete a specific parcel by parcelId
+        delete_parcel = [
+            parcel for parcel in self.parcels if parcel['parcelId'] == parcelId]
+        self.deleted_parcels.append(delete_parcel[0])
+        self.parcels.remove(delete_parcel[0])
+        return "User with id {} deleted".format(parcelId)
 
