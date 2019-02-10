@@ -89,7 +89,7 @@ class Users:
 
     def add_user(self, username, email, password):
         # create a new regular user
-        self.role_id = 1 #regular user role id
+        self.role_id = 1  # regular user role id
         self.username = ''.join(username.lower().split())
         self.email = ''.join(email.lower().split())
         self.password = sha256_crypt.encrypt(str(password))
@@ -126,3 +126,23 @@ class Users:
 
         self.cur.execute(query, (self.username, self.password, self.email))
         return "message: new user created"
+
+    def get_user_by_email(self, email, password):
+        # retrieve a single user by their email address
+        self.password_candidate = password
+        query = """ SELECT * from users WHERE email = '{}'""".format(email)
+        self.cur.execute(query)
+        if self.cur.rowcount > 0:
+            # get stored hash
+            user_data = self.cur.fetchone()
+            self.actual_password = user_data['password']
+
+            # compare passwords
+            if sha256_crypt.verify(self.password_candidate, self.actual_password):
+                # passed
+                return user_data
+            else:
+                # failed
+                return None
+        else:
+            return None
