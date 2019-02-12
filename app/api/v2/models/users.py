@@ -46,6 +46,7 @@ class Users:
         password VARCHAR(255) NOT NULL,\
         email VARCHAR(255) NOT NULL UNIQUE,\
         date_created VARCHAR(255) NOT NULL,\
+        date_changed VARCHAR(255),\
         FOREIGN KEY(role_id) REFERENCES roles(role_id) ON UPDATE CASCADE ON DELETE CASCADE)"
         # users_table schema
         self.cur.execute(users_table)
@@ -73,18 +74,19 @@ class Users:
 
         print('message: tables created successfully')
 
-    def add_role(self, role_name):
+    def add_role(self):
         # creates a new role of admin or regular user
-        self.role_name = role_name
+        self.regular = "regular"
+        self.admin = "admin"
 
         # add role query
-        query = """ INSERT INTO roles(
-            role_name)
-            VALUES('{}')""".format(
-                self.role_name
+        query = """ INSERT INTO roles(role_id, role_name)
+            VALUES(1, '{}'),(2, '{}') ON CONFLICT (role_id) DO NOTHING""".format(
+                self.regular,
+                self.admin
         )
 
-        self.cur.execute(query, (role_name,))
+        self.cur.execute(query, (self.regular, self.admin))
         print('message: new role created')
 
     def add_user(self, username, email, password):
@@ -92,7 +94,7 @@ class Users:
         self.role_id = 1  # regular user role id
         self.username = ''.join(username.lower().split())
         self.email = ''.join(email.lower().split())
-        self.password = sha256_crypt.encrypt(str(password))
+        self.password = sha256_crypt.encrypt(str(password))#hash the password
         self.date_created = str(datetime.now())
 
         # check username query
@@ -128,6 +130,66 @@ class Users:
         return "message: new user created"
 
     def get_user_by_email(self, email, password):
+        # retrieve a single user by their email address
+        self.password_candidate = password
+        query = """ SELECT * from users WHERE email = '{}'""".format(email)
+        self.cur.execute(query)
+        if self.cur.rowcount > 0:
+            # get stored hash
+            user_data = self.cur.fetchone()
+            self.actual_password = user_data['password']
+
+            # compare passwords
+            if sha256_crypt.verify(self.password_candidate, self.actual_password):
+                # passed
+                return user_data
+            else:
+                # failed
+                return None
+        else:
+            return None
+
+    def add_admin(self, username, email, password):
+        # create an admin
+        self.role_id = 2  # admin role id
+        self.username = ''.join(username.lower().split())
+        self.email = ''.join(email.lower().split())
+        self.password = sha256_crypt.encrypt(str(password))
+        self.date_created = str(datetime.now())
+
+        # check username query
+        checkusername_query = """ SELECT * from users WHERE username = '{}'""".format(
+            self.username)
+        self.cur.execute(checkusername_query)
+        if self.cur.rowcount > 0:
+            return "message: Username already in use, please try again"
+
+        # check email query
+        checkemail_query = """ SELECT * from users WHERE email = '{}'""".format(
+            self.email)
+        self.cur.execute(checkemail_query)
+        if self.cur.rowcount > 0:
+            return "message: Email already in use, please try again"
+
+        # add admin query
+        query = """ INSERT INTO users(
+            role_id,
+            username,
+            password,
+            email,
+            date_created)
+            VALUES('{}', '{}', '{}', '{}', '{}')""".format(
+                self.role_id,
+                self.username,
+                self.password,
+                self.email,
+                self.date_created
+        )
+
+        self.cur.execute(query, (self.username, self.password, self.email))
+        return "message: new admin created"
+
+    def get_admin_by_email(self, email, password):
         # retrieve a single user by their email address
         self.password_candidate = password
         query = """ SELECT * from users WHERE email = '{}'""".format(email)
