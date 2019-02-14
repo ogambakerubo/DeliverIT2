@@ -208,3 +208,46 @@ class Users:
                 return None
         else:
             return None
+
+    def user_access(self, email):
+        #retrieve user by email
+        query = """ SELECT * from users WHERE email = '{}'""".format(email)
+        self.cur.execute(query)
+        if self.cur.rowcount > 0:
+            user_data = self.cur.fetchone()
+            return user_data
+        return None
+
+    def update_user(self, username, email, password):
+        #update user information
+        self.username = ''.join(username.lower().split())
+        self.email = email
+        self.password = sha256_crypt.encrypt(str(password))
+        self.date_changed = str(datetime.now())
+
+        # check username query
+        checkusername_query = """ SELECT * from users WHERE username = '{}'""".format(
+            self.username)
+        self.cur.execute(checkusername_query)
+        user_data = self.cur.fetchone()
+
+        if self.cur.rowcount > 0:
+            if self.username == user_data['username']:
+                return None
+            else:
+                return "message: Username already in use, please try again"
+
+        # add admin query
+        query = """ UPDATE users SET(
+            username,
+            password,
+            date_changed)=
+            ('{}', '{}', '{}') WHERE email = '{}'""".format(
+                self.username,
+                self.password,
+                self.date_changed,
+                self.email
+        )
+
+        self.cur.execute(query, (self.username, self.password, self.email))
+        return "message: user updated"

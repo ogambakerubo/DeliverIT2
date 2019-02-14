@@ -27,6 +27,7 @@ def add_new_user():
     email = request.json.get('email', None)
     confirm_password = request.json.get('confirm-password', None)
 
+    #fill in the fields
     if not username:
         return jsonify({"message": "Fill in username"}), 400
     if not password:
@@ -54,6 +55,7 @@ def get_user_by_email():
     password = request.json.get('password', None)
     email = request.json.get('email', None)
 
+    #fill in the fields
     if not password:
         return jsonify({"message": "Fill in password"}), 400
     if not email:
@@ -80,6 +82,7 @@ def add_new_admin():
     email = request.json.get('email', None)
     confirm_password = request.json.get('confirm-password', None)
 
+    #fill in the fields
     if not username:
         return jsonify({"message": "Fill in username"}), 400
     if not password:
@@ -107,6 +110,7 @@ def get_admin_by_email():
     password = request.json.get('password', None)
     email = request.json.get('email', None)
 
+    #fill in the fields
     if not password:
         return jsonify({"message": "Fill in password"}), 400
     if not email:
@@ -124,3 +128,35 @@ def get_admin_by_email():
             return jsonify({'access_token': access_token, 'role_id': user_data['role_id']}), 200
     except TypeError:
         return jsonify({"message": "wrong email or password"})
+
+@app.route('/auth/account', methods=['PATCH'])
+@jwt_required
+#update user account
+def update_user():
+    current_user = get_jwt_identity()
+    email = current_user
+    regular_data = db.user_access(email)
+    #verify and grant access
+    if regular_data['role_id'] == 1 or regular_data['role_id'] == 2:
+        username = request.json.get('username', None)
+        password = request.json.get('password', None)
+        confirm_password = request.json.get('confirm-password', None)
+
+        #fill in the fields
+        if not username:
+            return jsonify({"message": "Fill in username"}), 400
+        if not password:
+            return jsonify({"message": "Fill in password"}), 400
+        if not confirm_password:
+            return jsonify({"message": "Fill in password"}), 400
+        if not confirm_password == password:
+            return jsonify({"message": "password and confirm-password MUST match"}), 400
+
+        parsejson = request.get_json()
+        username = parsejson['username']
+        password = parsejson['password']
+        confirm_password = parsejson['confirm-password']
+
+        if username and password and confirm_password:
+            return jsonify({'feedback': db.update_user(username, email, password)}), 201
+
