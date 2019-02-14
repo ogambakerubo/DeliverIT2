@@ -160,3 +160,15 @@ def update_user():
         if username and password and confirm_password:
             return jsonify({'feedback': db.update_user(username, email, password)}), 201
 
+@app.route('/admin/accounts', methods=['GET'])
+@jwt_required
+# get all users and their details
+def get_all_users():
+    current_user = get_jwt_identity()
+    email = current_user
+    admin_user = db.user_access(email)
+    #verify and grant access
+    if admin_user['role_id'] == 2:
+        return jsonify({'users': db.get_all_users()}), 200
+    #access denied
+    return jsonify({'message': 'Access Denied!'}), 401

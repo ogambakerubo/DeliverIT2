@@ -251,3 +251,14 @@ class Users:
 
         self.cur.execute(query, (self.username, self.password, self.email))
         return "message: user updated"
+
+    def get_all_users(self):
+        #get all users and their details
+        get_all_users_query = """ SELECT user_id, username, email, date_created, date_changed 
+        FROM users WHERE role_id = '1'"""
+
+        self.cur.execute(get_all_users_query)
+        if self.cur.rowcount > 0:
+            all_users = self.cur.fetchall()
+
+            return all_users
