@@ -1,9 +1,15 @@
 # DeliverIT2/app/api/v2/models/users.py
+import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from datetime import datetime
 from passlib.hash import sha256_crypt
 
+DATABASE = os.environ.get("DATABASE", '')
+USER = os.environ.get("USER", '')
+PASSWORD = os.environ.get("PASSWORD", '')
+HOST = os.environ.get("HOST", '')
+PORT = os.environ.get("PORT", '')
 
 class Users:
     '''This class creates a blueprint for the user object'''
@@ -11,11 +17,11 @@ class Users:
     def __init__(self):
         # create a database connection
         try:
-            self.conn = psycopg2.connect(database="deliverit2_test_db",
-                                         user="postgres",
-                                         password="Cake-By-The-Ocean",
-                                         host="localhost",
-                                         port="5432")
+            self.conn = psycopg2.connect(database=DATABASE,
+                                         user=USER,
+                                         password=PASSWORD,
+                                         host=HOST,
+                                         port=PORT)
             self.conn.autocommit = True
             self.cur = self.conn.cursor(cursor_factory=RealDictCursor)
 
