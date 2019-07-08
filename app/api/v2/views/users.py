@@ -1,13 +1,15 @@
 # DeliverIT2/app/api/v2/views/users.py
+import os
 from flask import jsonify, request
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 
 # local imports
+JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY", '')
 from app import app
 from app.api.v2.models import users
 
 # Setup the Flask-JWT-Extended extension
-app.config['JWT_SECRET_KEY'] = "this-is-a-secret"
+app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
 jwt = JWTManager(app)
 
 # instantiate db object
